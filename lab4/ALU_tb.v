@@ -5,7 +5,7 @@
 
 module ALU_tb();
 	
-	reg clk, instruction_in, inst_load_en, inst_load_en, reset_instr, reset_all;
+	reg clk, instruction_in, inst_load_en, reset_instr, reset_all;
 	reg [5:0] A, B; 
 	wire [11:0] result;
 	
@@ -19,17 +19,48 @@ module ALU_tb();
 	
 	initial begin
 		clk = 0; 
-		instruction_in = 0; 
+		instruction_in = 1; 
+		inst_load_en = 1; 
+		reset_all = 1; 
+		reset_instr = 1; 
+		#100 ;
+		reset_instr = 1; 
+		reset_all = 0;
+		inst_load_en = 1; 
+		#CLK_PERIOD;
+		instruction_in = 1;
+		A = 6'b000001;
+		B = 6'b000001;
+		#(CLK_PERIOD);
+        instruction_in = 1; 
+        inst_load_en = 0;
+        A = 6'b000101;
+        B = 6'b000101;
+        # CLK_PERIOD; 
+        
+		#50 
 		inst_load_en = 0; 
-		reset_all = 0; 
-		reset_instr = 0; 
-		#50;
+		instruction_in = 0; 
+		#100 
+		A = 6'b0010;
+		B = 6'b0011;
+		#50
+		inst_load_en = 1; 
+		instruction_in = 1; 
+		reset_instr = 1; 
+		#50 
+		A = 6'b1010;
+		B = 6'b1011;
+		
+		
+		
+		 
 		
 	end
 	
 	ALU UUT(.clk(clk),
-			   .A(A), 
-			   .B(B),
+			   .A_in(A), 
+			   .B_in(B),
 			   .instruction_in(instruction_in),
 			   .inst_load_en(inst_load_en), 
 			   .reset_instr(reset_instr),
