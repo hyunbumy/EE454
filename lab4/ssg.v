@@ -1,11 +1,102 @@
+
+//////////////////////////////////////////////////////////////////////////////////
+// Author:			Brandon Franzke, Gandhi Puvvada, Bilal Zafar
+// Create Date:		02/17/2008, 2/6/2012 
+// File Name:		ee201_numlock_top.v [EXERCISE given to studnents]
+// Description: 
+//
+//
+// Revision: 		2.1
+// Additional Comments: Students: Search for the "TODO" sections and complete them.
+//                                There are about eleven "TODO" sections.
+//////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ns / 1ps
+
+module ee201_numlock_top (
+
+        ClkPort,                           // the 100 MHz incoming clock signal
+		// Sw7, Sw6, Sw5, Sw4, Sw3, Sw2, Sw1, Sw0, // 8 switches
+			Sw3, Sw2, Sw1, Sw0,
+		Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0, // 8 LEDs
+		An3, An2, An1, An0,			       // 4 anodes
+		Ca, Cb, Cc, Cd, Ce, Cf, Cg,        // 7 cathodes
+		Dp                                 // Dot Point Cathode on SSDs
+	  );
+
+
+	/*  INPUTS */
+	// Clock & Reset I/O
+	input		ClkPort;	
+// TODO: DEFINE THE INPUTS (buttons and switches) you need for this project
+// make sure to add those to the ee201_numlock_top PORT list also!	
+	// Project Specific Inputs
+	input		Sw3, Sw2, Sw1, Sw0;	
+
+	
+	
+	/*  OUTPUTS */
+	// Project Specific Outputs
+	// SSD Outputs
+	output 	Cg, Cf, Ce, Cd, Cc, Cb, Ca, Dp;
+	output 	An0, An1, An2, An3;	
+	
+	
+	
+	/*  LOCAL SIGNALS */
+	wire			reset, ClkPort;
+	wire			board_clk, sys_clk;
+	wire [1:0]		ssdscan_clk;
+	reg [26:0]	    DIV_CLK;
+	wire [3:0]		SSD0, SSD1, SSD2, SSD3;	
+	reg [6:0]  		SSD_CATHODES;
+	wire [6:0] 		SSD_CATHODES_blinking;	
+
+	
+	
+	
+//------------
+// CLOCK DIVISION
+
+	// The clock division circuitary works like this:
+	//
+	// ClkPort ---> [BUFGP2] ---> board_clk
+	// board_clk ---> [clock dividing counter] ---> DIV_CLK
+	// DIV_CLK ---> [constant assignment] ---> sys_clk;
+	
+	BUFGP BUFGP1 (board_clk, ClkPort); 	
+	
+//------------
+	// Our clock is too fast (100MHz) for SSD scanning
+	// create a series of slower "divided" clocks
+	// each successive bit is 1/2 frequency
+// TODO: create the sensitivity list
+	always @ (board_clk, reset)  
+	begin : CLOCK_DIVIDER
+      if (reset)
+			DIV_CLK <= 0;
+      else
+			DIV_CLK <= DIV_CLK + 1'b1;
+			// just incrementing makes our life easier
+// TODO: add the incrementer code
+			
+			
+	end		
+//------------	
+	// pick a divided clock bit to assign to system clock
+	// your decision should not be "too fast" or you will not see you state machine working
+	assign	sys_clk = DIV_CLK[25]; // DIV_CLK[25] (~1.5Hz) = (100MHz / 2**26) 
+	
+
+	
 //------------
 // SSD (Seven Segment Display)
 
 // TODO: finish the assignment for SSD3, SSD2, SSD1	
-	assign SSD3 = {1'b1, q_BAD, q_OPENING, q_G1011};
-	assign SSD2 = {q_G1011GET, q_G101, q_G101GET, q_G10}  ;
-	assign SSD1 = {q_G10GET, q_G1, q_G1GET, q_I}   ; 
-	assign SSD0 = state_num;
+	assign SSD3 = ;
+	assign SSD2 = ;
+	assign SSD1 = ; 
+	assign SSD0 = ;
 	
 	
 	// need a scan clk for the seven segment display 
@@ -44,20 +135,9 @@
 		2'b01: SSD = SSD1;
 		2'b10: SSD = SSD2;
 		2'b11: SSD = SSD3;
-// TODO: finish the multiplexor to scan through SSD0-SSD3 with ssdscan_clk[1:0]
 
 		endcase 
 	end	
-	
-	
-	// and finally convert SSD_num to ssd
-// TODO: write the code to enable "blinking"
-	// we want the CATHODES to turn "on-off-on-off" with system clock
-	// while we are in state: OPENING
-	assign SSD_CATHODES_blinking = SSD_CATHODES | ( {7{sys_clk & q_OPENING}} );
-	assign {Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp} = {SSD_CATHODES_blinking, 1'b1};
-
-	// Following is Hex-to-SSD conversion. Even though
 	always @ (SSD) 
 	begin : HEX_TO_SSD
 		case (SSD)
