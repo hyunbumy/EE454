@@ -23,11 +23,11 @@ module ALU_tb();
 		inst_load_en = 0; 
 		reset_all = 0; 
 		reset_instr = 0; 
-		#50 
+		#50;
 		
 	end
 	
-	ALU_tb UUT(.clk(clk),
+	ALU UUT(.clk(clk),
 			   .A(A), 
 			   .B(B),
 			   .instruction_in(instruction_in),

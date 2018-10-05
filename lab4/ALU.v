@@ -34,7 +34,7 @@ module ALU(input clk,
   reg [1:0] counter;
   
   reg [5:0] A;
-  reg [5:0] B;   
+  reg [5:0] B;
   
   initial
   begin

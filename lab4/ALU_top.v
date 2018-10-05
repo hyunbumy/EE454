@@ -1,13 +1,22 @@
 
 module ALU_top(
-			   input clk, 
-			   input [15:0] swt, 
-			   output [11:0] seg // some sort of seven seg name
+		     clk, 
+         swt, 
+			   An3, An2, An1, An0,			       // 4 anodes
+         Ca, Cb, Cc, Cd, Ce, Cf, Cg,        // 7 cathodes
+         Dp 
 			   );
+			   
+	input clk;
+	input [15:0] swt;
+	
+	output 	Cg, Cf, Ce, Cd, Cc, Cb, Ca, Dp;
+  output  An0, An1, An2, An3;  
 		
 	wire [5:0] A, B;
 	wire inst_load_en, instruction_in, reset_instr, reset_all; 
-	wire [11:0] result; 
+	wire [11:0] result;
+	wire [3:0] dig1, dig2, dig3, dig4;
 	
 	assign A = swt[5:0];
 	assign B = swt[11:6];
@@ -27,6 +36,7 @@ module ALU_top(
 		   .result(result)
 	);
 	
-	assign seg = result; // OR WHATEVER IT IS 
+	decoder decoder(result, dig1, dig2, dig3, dig4);
+	ssg ssg(dig1, dig2, dig3, dig4, clk, An3, An2, An1, An0, Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp);
 		
 endmodule

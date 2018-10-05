@@ -1,24 +1,9 @@
 
-//////////////////////////////////////////////////////////////////////////////////
-// Author:			Brandon Franzke, Gandhi Puvvada, Bilal Zafar
-// Create Date:		02/17/2008, 2/6/2012 
-// File Name:		ee201_numlock_top.v [EXERCISE given to studnents]
-// Description: 
-//
-//
-// Revision: 		2.1
-// Additional Comments: Students: Search for the "TODO" sections and complete them.
-//                                There are about eleven "TODO" sections.
-//////////////////////////////////////////////////////////////////////////////////
-
 `timescale 1ns / 1ps
 
-module ee201_numlock_top (
-
-        ClkPort,                           // the 100 MHz incoming clock signal
-		// Sw7, Sw6, Sw5, Sw4, Sw3, Sw2, Sw1, Sw0, // 8 switches
-			Sw3, Sw2, Sw1, Sw0,
-		Ld7, Ld6, Ld5, Ld4, Ld3, Ld2, Ld1, Ld0, // 8 LEDs
+module ssg (
+    dig1, dig2, dig3, dig4,
+    ClkPort,                           // the 100 MHz incoming clock signal
 		An3, An2, An1, An0,			       // 4 anodes
 		Ca, Cb, Cc, Cd, Ce, Cf, Cg,        // 7 cathodes
 		Dp                                 // Dot Point Cathode on SSDs
@@ -27,14 +12,8 @@ module ee201_numlock_top (
 
 	/*  INPUTS */
 	// Clock & Reset I/O
-	input		ClkPort;	
-// TODO: DEFINE THE INPUTS (buttons and switches) you need for this project
-// make sure to add those to the ee201_numlock_top PORT list also!	
-	// Project Specific Inputs
-	input		Sw3, Sw2, Sw1, Sw0;	
-
-	
-	
+	input		ClkPort;		
+	input [3:0] dig1, dig2, dig3, dig4;
 	/*  OUTPUTS */
 	// Project Specific Outputs
 	// SSD Outputs
@@ -50,7 +29,8 @@ module ee201_numlock_top (
 	reg [26:0]	    DIV_CLK;
 	wire [3:0]		SSD0, SSD1, SSD2, SSD3;	
 	reg [6:0]  		SSD_CATHODES;
-	wire [6:0] 		SSD_CATHODES_blinking;	
+	wire [6:0] 		SSD_CATHODES_blinking;
+	reg [3:0] SSD;
 
 	
 	
@@ -93,10 +73,10 @@ module ee201_numlock_top (
 // SSD (Seven Segment Display)
 
 // TODO: finish the assignment for SSD3, SSD2, SSD1	
-	assign SSD3 = ;
-	assign SSD2 = ;
-	assign SSD1 = ; 
-	assign SSD0 = ;
+	assign SSD3 = dig1;
+	assign SSD2 = dig2;
+	assign SSD1 = dig3; 
+	assign SSD0 = dig1;
 	
 	
 	// need a scan clk for the seven segment display 
