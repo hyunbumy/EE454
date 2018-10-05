@@ -27,17 +27,24 @@ module ALU_tb();
 		reset_instr = 1; 
 		reset_all = 0;
 		inst_load_en = 1; 
+		A = 6'b000001;
+        B = 6'b000001;
+        #(2*CLK_PERIOD);
+        inst_load_en = 0; 
+        #(2*CLK_PERIOD);
+        inst_load_en = 1; 
+        #(2*CLK_PERIOD);
+        inst_load_en = 0; 
+        #(2*CLK_PERIOD);
+        inst_load_en = 1; 
 		#CLK_PERIOD;
 		instruction_in = 1;
-		A = 6'b000001;
-		B = 6'b000001;
+		
 		#(CLK_PERIOD);
         instruction_in = 1; 
         inst_load_en = 0;
         A = 6'b000101;
         B = 6'b000101;
-        # CLK_PERIOD; 
-        
 		#50 
 		inst_load_en = 0; 
 		instruction_in = 0; 
@@ -51,9 +58,6 @@ module ALU_tb();
 		#50 
 		A = 6'b1010;
 		B = 6'b1011;
-		
-		
-		
 		 
 		
 	end
