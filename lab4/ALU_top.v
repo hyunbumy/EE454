@@ -1,13 +1,15 @@
 
 module ALU_top(
-		     clk, 
+         ClkPort,
+		     CPU_RESET, 
          swt, 
 			   An3, An2, An1, An0,			       // 4 anodes
          Ca, Cb, Cc, Cd, Ce, Cf, Cg,        // 7 cathodes
          Dp 
 			   );
 			   
-	input clk;
+	input CPU_RESET;
+	input ClkPort;
 	input [15:0] swt;
 	
 	output 	Cg, Cf, Ce, Cd, Cc, Cb, Ca, Dp;
@@ -26,9 +28,9 @@ module ALU_top(
 	assign reset_all = swt[15];
 	
 	
-	ALU UUT(.clk(clk),
-		   .A(A), 
-		   .B(B),
+	ALU UUT(.clk(ClkPort),
+		   .A_in(A), 
+		   .B_in(B),
 		   .instruction_in(instruction_in),
 		   .inst_load_en(inst_load_en), 
 		   .reset_instr(reset_instr),
@@ -37,6 +39,6 @@ module ALU_top(
 	);
 	
 	decoder decoder(result, dig1, dig2, dig3, dig4);
-	ssg ssg(dig1, dig2, dig3, dig4, clk, An3, An2, An1, An0, Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp);
+	ssg ssg(dig1, dig2, dig3, dig4, ClkPort, CPU_RESET, An3, An2, An1, An0, Ca, Cb, Cc, Cd, Ce, Cf, Cg, Dp);
 		
 endmodule

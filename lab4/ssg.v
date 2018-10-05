@@ -3,7 +3,7 @@
 
 module ssg (
     dig1, dig2, dig3, dig4,
-    ClkPort,                           // the 100 MHz incoming clock signal
+    ClkPort,reset,                            // the 100 MHz incoming clock signal
 		An3, An2, An1, An0,			       // 4 anodes
 		Ca, Cb, Cc, Cd, Ce, Cf, Cg,        // 7 cathodes
 		Dp                                 // Dot Point Cathode on SSDs
@@ -12,7 +12,7 @@ module ssg (
 
 	/*  INPUTS */
 	// Clock & Reset I/O
-	input		ClkPort;		
+	input		ClkPort, reset;		
 	input [3:0] dig1, dig2, dig3, dig4;
 	/*  OUTPUTS */
 	// Project Specific Outputs
@@ -51,7 +51,7 @@ module ssg (
 	// create a series of slower "divided" clocks
 	// each successive bit is 1/2 frequency
 // TODO: create the sensitivity list
-	always @ (board_clk, reset)  
+	always @ (ClkPort, reset)  
 	begin : CLOCK_DIVIDER
       if (reset)
 			DIV_CLK <= 0;
