@@ -15,7 +15,6 @@ module ssg (
 	input		ClkPort, reset;		
 	input [3:0] dig1, dig2, dig3, dig4;
 	/*  OUTPUTS */
-	// Project Specific Outputs
 	// SSD Outputs
 	output 	Cg, Cf, Ce, Cd, Cc, Cb, Ca, Dp;
 	output 	An0, An1, An2, An3;	
@@ -24,82 +23,31 @@ module ssg (
 	
 	/*  LOCAL SIGNALS */
 	wire			reset, ClkPort;
-	wire			board_clk, sys_clk;
+	wire			board_clk;
 	wire [1:0]		ssdscan_clk;
 	reg [26:0]	    DIV_CLK;
 	wire [3:0]		SSD0, SSD1, SSD2, SSD3;	
 	reg [6:0]  		SSD_CATHODES;
-	wire [6:0] 		SSD_CATHODES_blinking;
 	reg [3:0] SSD;
 
 	
-	
-	
-//------------
-// CLOCK DIVISION
 
-	// The clock division circuitary works like this:
-	//
-	// ClkPort ---> [BUFGP2] ---> board_clk
-	// board_clk ---> [clock dividing counter] ---> DIV_CLK
-	// DIV_CLK ---> [constant assignment] ---> sys_clk;
-	
 	BUFGP BUFGP1 (board_clk, ClkPort); 	
-	
-//------------
-	// Our clock is too fast (100MHz) for SSD scanning
-	// create a series of slower "divided" clocks
-	// each successive bit is 1/2 frequency
-// TODO: create the sensitivity list
-	always @ (ClkPort, reset)  
+
+	always @ (posedge ClkPort, reset)  
 	begin : CLOCK_DIVIDER
       if (reset)
 			DIV_CLK <= 0;
       else
-			DIV_CLK <= DIV_CLK + 1'b1;
-			// just incrementing makes our life easier
-// TODO: add the incrementer code
-			
+			DIV_CLK <= DIV_CLK + 1'b1;		
 			
 	end		
-//------------	
-	// pick a divided clock bit to assign to system clock
-	// your decision should not be "too fast" or you will not see you state machine working
-	assign	sys_clk = DIV_CLK[25]; // DIV_CLK[25] (~1.5Hz) = (100MHz / 2**26) 
-	
 
-	
-//------------
-// SSD (Seven Segment Display)
-
-// TODO: finish the assignment for SSD3, SSD2, SSD1	
 	assign SSD3 = dig1;
 	assign SSD2 = dig2;
 	assign SSD1 = dig3; 
 	assign SSD0 = dig1;
-	
-	
-	// need a scan clk for the seven segment display 
-	
-	// 100 MHz / 2^18 = 381.5 cycles/sec ==> frequency of DIV_CLK[17]
-	// 100 MHz / 2^19 = 190.7 cycles/sec ==> frequency of DIV_CLK[18]
-	// 100 MHz / 2^20 =  95.4 cycles/sec ==> frequency of DIV_CLK[19]
-	
-	// 381.5 cycles/sec (2.62 ms per digit) [which means all 4 digits are lit once every 10.5 ms (reciprocal of 95.4 cycles/sec)] works well.
-	
-	//                  --|  |--|  |--|  |--|  |--|  |--|  |--|  |--|  |   
-    //                    |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
-	//  DIV_CLK[17]       |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|
-	//
-	//               -----|     |-----|     |-----|     |-----|     |
-    //                    |  0  |  1  |  0  |  1  |     |     |     |     
-	//  DIV_CLK[18]       |_____|     |_____|     |_____|     |_____|
-	//
-	//         -----------|           |-----------|           |
-    //                    |  0     0  |  1     1  |           |           
-	//  DIV_CLK[19]       |___________|           |___________|
-	//
-	
+
 	assign ssdscan_clk = DIV_CLK[19:18];
 	
 	assign An0	= !(~(ssdscan_clk[1]) && ~(ssdscan_clk[0]));  // when ssdscan_clk = 00
@@ -131,14 +79,13 @@ module ssg (
 			4'b0111: SSD_CATHODES = 7'b0001111; // 7
 			4'b1000: SSD_CATHODES = 7'b0000000; // 8
 			4'b1001: SSD_CATHODES = 7'b0001100; // 9
-// TODO: write cases for 0-9
 			4'b1010: SSD_CATHODES = 7'b0001000 ; // A
 			4'b1011: SSD_CATHODES = 7'b1100000 ; // B
 			4'b1100: SSD_CATHODES = 7'b0110001 ; // C
 			4'b1101: SSD_CATHODES = 7'b1000010 ; // D
 			4'b1110: SSD_CATHODES = 7'b0110000 ; // E
 			4'b1111: SSD_CATHODES = 7'b0111000 ; // F    
-			default: SSD_CATHODES = 7'bXXXXXXX ; // default is not needed as we covered all cases
+			default: SSD_CATHODES = 7'bXXXXXXX ; // default 
 		endcase
 	end	
 	
