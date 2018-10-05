@@ -4,13 +4,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module ALU(input clk, 
-			     input [5:0] A_in, 
-			     input [5:0] B_in, 
-           input instruction_in,
-           input inst_load_en,
-           input reset_instr,
-           input reset_all,
-			     output reg [11:0] result
+            input [5:0] A_in, 
+            input [5:0] B_in, 
+            input instruction_in,
+            input inst_load_en,
+            input reset_instr,
+            input reset_all,
+            output reg [11:0] result
 			    );
 
   wire qs3, qs2, qs1, qs0;
@@ -31,20 +31,22 @@ module ALU(input clk,
 	reg [3:0] state;
 	assign {qs3, qs2, qs1, qs0} = state;
   reg [3:0] opcode;
-  reg [1:0] counter;
+  reg [2:0] counter;
   
   reg [5:0] A;
-  reg [5:0] B;
+  reg [5:0] B;   
   
+  reg flag; 
+  /*
   initial
   begin
     A <= 6'bXXXXXX;
     B <= 6'bXXXXXX;
     opcode <= 4'b0000;
     counter <= 2'b00;
-    result <= 12'b000000000000;
+    
   end
-
+*/
 	always @(posedge clk)
 	begin
 		if(reset_all) 
@@ -54,6 +56,8 @@ module ALU(input clk,
 		    B <= 6'bXXXXXX;
         opcode <= 4'b0000;
         counter <= 2'b00;
+        result <= 12'b000000000000;
+        flag <= 0; 
 		end
     
     else
@@ -65,12 +69,8 @@ module ALU(input clk,
             begin
                 counter <= 0;
             end
-            else if (inst_load_en)
-            begin
-                opcode[counter] <= instruction_in;
-                counter <= counter + 1;
-            end
-            else if (counter == 2'b11)
+            
+            else if (counter == 3'b100)
             begin
                 A <= A_in;
                 B <= B_in;
@@ -121,53 +121,77 @@ module ALU(input clk,
                   end                                                                                                                                 
                 endcase
             end
+            else if (inst_load_en)
+                        begin
+                            if( ~flag) 
+                                begin
+                                    opcode[counter] <= instruction_in;
+                                    counter <= counter + 1;
+                                    flag <= 1;
+                                end
+                        end
+            else if(~inst_load_en)
+                    begin
+                        flag <=0; 
+                    end
         end
         ADD:
         begin
             result <= A + B;
+            state <= GETOP;
         end
         SUBTRACT:
         begin
             result <= A - B;
+            state <= GETOP;
         end
         MODULUS:
         begin
           result <= A % B;
+          state <= GETOP;
         end
         MULTIPLY:
         begin
           result <= A * B;
+          state <= GETOP;
         end
         DIVIDE:
         begin
           result <= A / B;
+          state <= GETOP;
         end 
         NOT:
         begin
           result <= ~A;
+          state <= GETOP;
         end
         AND:
         begin
           result <= A & B;
+          state <= GETOP;
         end
         OR:
         begin
           result <= A | B;
+          state <= GETOP;
         end
         XOR:
         begin
           result <= A ^ B;
+          state <= GETOP;
         end
         SHIFT_LEFT:
         begin
           result <= A << B;
+          state <= GETOP;
         end
         SHIFT_RIGHT:
         begin
           result <= A >> B;
+          state <= GETOP;
         end        
         endcase
-        state <= GETOP;
+        //state <= GETOP;
      end
 	end 
 	
