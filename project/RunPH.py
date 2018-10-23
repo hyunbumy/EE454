@@ -13,7 +13,9 @@ def main(argv):
     block_size = int(argv[1])
 
     # print(input_string, block_size)
-    print(bytes.decode(binascii.hexlify(ParallelHash256(input_string, block_size))))
+    result_hex = binascii.hexlify(ParallelHash256(input_string, block_size))
+    print("Input String: {}".format(argv[0]))
+    print("ParallelHash: {}".format(bytes.decode(result_hex)))
 
 if __name__ == '__main__':
     main(sys.argv[1:])
