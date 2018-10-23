@@ -39,3 +39,9 @@ def bytepad(X, w):
         z += "00000000"
     
     return z
+
+def to_bitstring(b):
+    return BitArray(bytes=b).bin
+
+def to_bytearray(X):
+    return int(X, 2).to_bytes((len(X) + 7) // 8, byteorder='big') if X is not '' else bytearray("", encoding='utf-8')
