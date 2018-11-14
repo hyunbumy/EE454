@@ -1,0 +1,4 @@
+
+
+class Slave(object):
+    pass
