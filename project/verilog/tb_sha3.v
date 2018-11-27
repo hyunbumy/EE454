@@ -134,7 +134,7 @@ module tb_sha3();
 	wire	[31:0]	tb_rd_data;
 	wire				tb_rdy;
 	
-	integer i, j;
+	integer i, j, k;
 	integer num_err;
 	integer total_bits;
 	integer block_words, output_words;
@@ -142,7 +142,7 @@ module tb_sha3();
 	reg	[511:0]	hash_shreg;		// output
 	reg	[31: 0]	hash_word;		// current output word
 
-	integer clocks;
+	integer clocks, file;
 	integer startclock, endclocks;
 	
 	reg				mismatch;		// error flag
@@ -207,6 +207,7 @@ module tb_sha3();
 			tb_wr_data	= 32'h0;
 			tb_dut_init = 0;
 			tb_dut_next = 0;
+			clocks	= 0;
 		end
 	endtask // init_sim()
 
@@ -289,11 +290,14 @@ module tb_sha3();
 			
 			if (mismatch) $display("    *** Test failed.");
 			else          $display("    *** Test passed.");
-			
+
+
+		endclocks = clocks - startclock;
+		$fdisplay(file, "SHA-3 %0d-bit test_empty_message took: %d clocks", output_size, endclocks);	
+		$display("SHA-3 %0d-bit test_empty_message took: %d clocks", output_size, endclocks);
 		end
 
-		endclocks = startclock - clocks;
-		$display("It took %d clocks to complete test_empty_message", endclocks);
+		
 
 	endtask // test_empty_message
 
@@ -376,10 +380,11 @@ module tb_sha3();
 			
 			if (mismatch) $display("    *** Test failed.");
 			else          $display("    *** Test passed.");
-			
+		endclocks = clocks - startclock;
+		$fdisplay(file, "SHA-3 %0d-bit test_short_message took: %d clocks", output_size, endclocks);	
+		$display("SHA-3 %0d-bit test_short_message took: %d clocks", output_size, endclocks);
 		end
-		endclocks = startclock - clocks;
-		$display("It took %d clocks to complete test_short_message", endclocks);
+		
 	endtask // test_short_message
 
 
@@ -509,10 +514,11 @@ module tb_sha3();
 			
 			if (mismatch) $display("    *** Test failed.");
 			else          $display("    *** Test passed.");
-			
+		endclocks = clocks - startclock;
+		$fdisplay(file, "SHA-3 %0d-bit test_long_message took: %d clocks", output_size, endclocks);	
+		$display("SHA-3 %0d-bit test_long_message took: %d clocks", output_size, endclocks);
 		end
-		endclocks = startclock - clocks;
-		$display("It took %d clocks to complete test_long_message", endclocks);
+		
 	endtask // test_long_message
 
 
@@ -581,14 +587,20 @@ module tb_sha3();
   initial
   
     begin : sha3_test
-      $display("*** Testbench for sha3.v started.");
+		file = $fopen("data.txt", "w");
+      $fdisplay(file, "*** Testbench for sha3.v started.");
+	  $display("*** Testbench for sha3.v started.");
 
 		num_err = 0;
 
       init_sim();
       reset_dut();
-		
-      test_empty_message(SHA3_224_EMPTY_MSG, `SHA3_224_BLOCK_BITS, `SHA3_224_OUTPUT_BITS);
+	
+	for (k=0; k<100; k=k+1) begin
+	$fwrite(file, "Run %0d:", k);
+		test_empty_message(SHA3_256_EMPTY_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
+	end
+      /*test_empty_message(SHA3_224_EMPTY_MSG, `SHA3_224_BLOCK_BITS, `SHA3_224_OUTPUT_BITS);
       test_empty_message(SHA3_256_EMPTY_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
       test_empty_message(SHA3_384_EMPTY_MSG, `SHA3_384_BLOCK_BITS, `SHA3_384_OUTPUT_BITS);
       test_empty_message(SHA3_512_EMPTY_MSG, `SHA3_512_BLOCK_BITS, `SHA3_512_OUTPUT_BITS);
@@ -601,15 +613,17 @@ module tb_sha3();
 		test_long_message(SHA3_224_LONG_MSG, `SHA3_224_BLOCK_BITS, `SHA3_224_OUTPUT_BITS);
 		test_long_message(SHA3_256_LONG_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
 		test_long_message(SHA3_384_LONG_MSG, `SHA3_384_BLOCK_BITS, `SHA3_384_OUTPUT_BITS);
-		test_long_message(SHA3_512_LONG_MSG, `SHA3_512_BLOCK_BITS, `SHA3_512_OUTPUT_BITS);
+		test_long_message(SHA3_512_LONG_MSG, `SHA3_512_BLOCK_BITS, `SHA3_512_OUTPUT_BITS);*/
 
       $display("*** Testbench for sha3.v done.");
+	  $fdisplay(file, "*** Testbench for sha3.v done.");
 		
 		if (num_err == 0)
 			$display("    *** All tests passed.");
 		else
 			$display("    *** %0d tests not passed.", num_err);
 		
+		$fclose(file);
       $finish;
 		
     end // sha3_test
