@@ -596,9 +596,24 @@ module tb_sha3();
       init_sim();
       reset_dut();
 	
+	$fdisplay(file, "***** PRELIMINARY RUN *****");
+		test_empty_message(SHA3_256_EMPTY_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
+		test_short_message(SHA3_256_SHORT_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
+		test_long_message(SHA3_256_LONG_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
+	$fdisplay(file, "***** *************** *****");
+
+	
 	for (k=0; k<100; k=k+1) begin
 	$fwrite(file, "Run %0d:", k);
 		test_empty_message(SHA3_256_EMPTY_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
+	end
+	for (k=0; k<100; k=k+1) begin
+	$fwrite(file, "Run %0d:", k);
+		test_short_message(SHA3_256_SHORT_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
+	end
+	for (k=0; k<100; k=k+1) begin
+	$fwrite(file, "Run %0d:", k);
+		test_long_message(SHA3_256_LONG_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
 	end
       /*test_empty_message(SHA3_224_EMPTY_MSG, `SHA3_224_BLOCK_BITS, `SHA3_224_OUTPUT_BITS);
       test_empty_message(SHA3_256_EMPTY_MSG, `SHA3_256_BLOCK_BITS, `SHA3_256_OUTPUT_BITS);
