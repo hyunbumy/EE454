@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Mon Nov 19 00:17:53 2018
+# Process ID: 12345
+# Current directory: /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.runs/synth_1
+# Command line: vivado -log hash_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source hash_top.tcl
+# Log file: /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.runs/synth_1/hash_top.vds
+# Journal file: /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source hash_top.tcl -notrace
