@@ -1,5 +1,5 @@
 from CompactFIPS202 import SHA3_256
-from ParallelHash import ParallelHash256
+from ParallelHash import ParallelHash256, ParallelHash256_test
 import binascii
 import Util
 import time
@@ -39,8 +39,16 @@ for i in range(100):
 
 print("Sum: {}s".format(total))
 
-# s = Util.to_bitstring(bytearray("", encoding='utf-8'))
-# start_time = time.time()
-# ParallelHash256(s, 8)
-# duration = time.time() - start_time
-# print("Parallel: {}s".format(duration))
+print("")
+
+t = bytearray("\xa3"*1000, encoding='utf-8')
+start_time = time.time()
+SHA3_256(t)
+duration = time.time()-start_time
+print("SHA3: {}s".format(duration))
+
+s = Util.to_bitstring(bytearray("\xa3"*1000, encoding='utf-8'))
+start_time = time.time()
+ParallelHash256(s, 8)
+duration = time.time() - start_time
+print("Parallel: {}s".format(duration))

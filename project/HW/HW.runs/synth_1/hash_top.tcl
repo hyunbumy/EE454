@@ -30,7 +30,6 @@ set_property target_language Verilog [current_project]
 set_property ip_output_repo /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib {
-  /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/debounce.v
   /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/uart_tx.v
   /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/hash_top.v
 }

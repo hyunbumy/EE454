@@ -1,6 +1,7 @@
 from CompactFIPS202 import SHAKE256, Keccak, SHA3_256
 from math import ceil
 import Util
+import threading
 
 
 # Refer to https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf
@@ -27,6 +28,15 @@ def ParallelHash256(X, B, L=256, S=""):
     z += Util.right_encode(n) + Util.right_encode(L)
     return cSHAKE256(z, L, "ParallelHash", S)
 
+def ParallelHash256_p(X, B, L=256, S=""):
+    n = ceil((len(X)/8) / 8)
+    z = Util.left_encode(B)
+
+    for i in range(n):
+        # Convert bytearray to bit string
+        z += Util.to_bitstring(cSHAKE256(X[i*B*8:(i+1)*B*8], 512, "", ""))
+    z += Util.right_encode(n) + Util.right_encode(L)
+    return cSHAKE256(z, L, "ParallelHash", S)
 
 # Specific implementation that uses SHA3_256 for its underlying Keccak hashing
 def cSHAKE256_test(X, L, N, S):

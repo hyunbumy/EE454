@@ -16,7 +16,7 @@ module top_tb ();
   // Want to interface to 9600 baud UART
   // 10000000 / 9600 = 1042 Clocks Per Bit.
   parameter c_CLOCK_PERIOD_NS = 10;
-  parameter c_CLKS_PER_BIT    = 870;
+  parameter c_CLKS_PER_BIT    = 868;
 //  parameter c_BIT_PERIOD      = 8600;
    
   reg r_Clock = 0;
@@ -61,7 +61,7 @@ module top_tb ();
       @(posedge r_Clock);
       @(posedge r_Clock);
       @(posedge r_Clock);
-      r_Tx_DV <= 1'b0;
+//      r_Tx_DV <= 1'b0;
       @(posedge w_Tx_Done);
        
       // Send a command to the UART (exercise Rx)

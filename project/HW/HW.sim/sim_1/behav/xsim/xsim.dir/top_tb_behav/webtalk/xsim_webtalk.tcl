@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Mon Nov 19 00:28:38 2018" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Sat Dec  1 18:13:17 2018" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2018.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "2258646" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "LIN64" -context "software_version_and_target_device"
@@ -14,19 +14,19 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "b2706561831957778a270fbd385dbfa4" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "18867536566d46e2ab074146643aeb95" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "12" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "24" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "ManjaroLinux" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "Manjaro Linux" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i7-4700MQ CPU @ 2.40GHz" -context "user_environment"
-webtalk_add_data -client project -key cpu_speed -value "2370.193 MHz" -context "user_environment"
+webtalk_add_data -client project -key cpu_speed -value "2189.267 MHz" -context "user_environment"
 webtalk_add_data -client project -key total_processors -value "1" -context "user_environment"
 webtalk_add_data -client project -key system_ram -value "8.000 GB" -context "user_environment"
 webtalk_register_client -client xsim
 webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\usage"
-webtalk_add_data -client xsim -key runtime -value "100 us" -context "xsim\\usage"
+webtalk_add_data -client xsim -key runtime -value "1101 us" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "1" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Time -value "0.05_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Memory -value "115444_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 2814511232 -regid "" -xml /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key Simulation_Time -value "0.14_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Memory -value "114672_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 3359640055 -regid "" -xml /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.sim/sim_1/behav/xsim/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate
