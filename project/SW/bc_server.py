@@ -1,3 +1,16 @@
+# Taken From:
+#   https://gist.github.com/aunyks/47d157f8bc7d1829a729c2a6a919c173
+# How to run:
+# (1) Add Transaction: 
+# curl "localhost:5000/txion" \
+#     -H "Content-Type: application/json" \
+#     -d '{"from": "akjflw", "to":"fjlakdj", "amount": 3}
+#
+# (2) Mine current block:
+# curl localhost:5000/mine
+#
+# (3) Check all blocks on blockchain:
+# curl localhost:5000/blocks
 from flask import Flask
 from flask import request
 from CompactFIPS202 import SHA3_256
@@ -8,7 +21,7 @@ import hashlib as hasher
 import datetime as date
 node = Flask(__name__)
 
-# Define what a Snakecoin block is
+# Define what a block is
 class Block:
   def __init__(self, index, timestamp, data, previous_hash):
     self.index = index
