@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Sun Dec  2 11:53:05 2018
+# Process ID: 20901
+# Current directory: /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.runs/impl_1
+# Command line: vivado -log debounce.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source debounce.tcl -notrace
+# Log file: /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.runs/impl_1/debounce.vdi
+# Journal file: /home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.runs/impl_1/vivado.jou
+#-----------------------------------------------------------
+source debounce.tcl -notrace

@@ -1,6 +1,8 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  \
+"../../../../HW.srcs/sources_1/new/dummy.v" \
 "../../../../HW.srcs/sources_1/new/hash_top.v" \
+"../../../../HW.srcs/sources_1/new/uart_rx.v" \
 "../../../../HW.srcs/sources_1/new/uart_tx.v" \
 "../../../../HW.srcs/sim_1/new/top_tb.v" \
 

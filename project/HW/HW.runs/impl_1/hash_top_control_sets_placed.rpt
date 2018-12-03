@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
-| Date         : Sat Dec  1 18:26:05 2018
+| Date         : Mon Dec  3 01:21:56 2018
 | Host         : brad-pc running 64-bit Manjaro Linux
 | Command      : report_control_sets -verbose -file hash_top_control_sets_placed.rpt
 | Design       : hash_top
@@ -23,8 +23,8 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Number of unique control sets                            |     3 |
-| Unused register locations in slices containing registers |    12 |
+| Number of unique control sets                            |     6 |
+| Unused register locations in slices containing registers |    26 |
 +----------------------------------------------------------+-------+
 
 
@@ -35,6 +35,8 @@ Table of Contents
 | Fanout | Control Sets |
 +--------+--------------+
 |      2 |            1 |
+|      6 |            1 |
+|     10 |            2 |
 |    16+ |            2 |
 +--------+--------------+
 
@@ -45,12 +47,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              16 |            4 |
+| No           | No                    | No                     |              66 |           16 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |               2 |            1 |
+| Yes          | No                    | No                     |               8 |            2 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              18 |            2 |
+| Yes          | Yes                   | No                     |              36 |            6 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -60,9 +62,12 @@ Table of Contents
 +----------------------+----------------------------------+----------------------------------+------------------+----------------+
 |     Clock Signal     |           Enable Signal          |         Set/Reset Signal         | Slice Load Count | Bel Load Count |
 +----------------------+----------------------------------+----------------------------------+------------------+----------------+
-|  CLK100MHZ_IBUF_BUFG | tx_inst/r_Clock_Count[9]_i_2_n_0 |                                  |                1 |              2 |
-|  CLK100MHZ_IBUF_BUFG |                                  |                                  |                4 |             16 |
-|  CLK100MHZ_IBUF_BUFG | tx_inst/r_Clock_Count[9]_i_2_n_0 | tx_inst/r_Clock_Count[9]_i_1_n_0 |                2 |             18 |
+|  CLK100MHZ_IBUF_BUFG | tx_inst/r_Clock_Count[4]_i_2_n_0 |                                  |                1 |              2 |
+|  CLK100MHZ_IBUF_BUFG | dum_inst/i[6]_i_1_n_0            |                                  |                1 |              6 |
+|  CLK100MHZ_IBUF_BUFG | tx_inst/r_Clock_Count[4]_i_2_n_0 | tx_inst/r_Clock_Count[4]_i_1_n_0 |                1 |             10 |
+|  CLK100MHZ_IBUF_BUFG | dum_inst/i[6]_i_1_n_0            | dum_inst/i[7]_i_1_n_0            |                2 |             10 |
+|  CLK100MHZ_IBUF_BUFG | rx_inst/r_Clock_Count[9]_i_2_n_0 | rx_inst/r_Clock_Count[9]_i_1_n_0 |                3 |             16 |
+|  CLK100MHZ_IBUF_BUFG |                                  |                                  |               16 |             66 |
 +----------------------+----------------------------------+----------------------------------+------------------+----------------+
 
 

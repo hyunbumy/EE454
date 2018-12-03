@@ -19,7 +19,8 @@ module uart_tx
    input [7:0] i_Tx_Byte, 
    output      o_Tx_Active,
    output reg  o_Tx_Serial,
-   output      o_Tx_Done
+   output      o_Tx_Done,
+   output [3:0] o_led
    );
   
   parameter s_IDLE         = 3'b000;
@@ -129,7 +130,7 @@ module uart_tx
         // Stay here 1 clock
         s_CLEANUP :
           begin
-            r_Tx_Done <= 1'b1;
+            r_Tx_Done <= 1'b0;
             r_SM_Main <= s_IDLE;
           end
          
@@ -142,5 +143,10 @@ module uart_tx
  
   assign o_Tx_Active = r_Tx_Active;
   assign o_Tx_Done   = r_Tx_Done;
+  
+  assign o_led[0] = r_SM_Main == s_IDLE;
+  assign o_led[1] = r_SM_Main == s_TX_START_BIT;
+  assign o_led[2] = r_SM_Main == s_TX_STOP_BIT;
+  assign o_led[3] = r_SM_Main == s_CLEANUP;
    
 endmodule

@@ -1,5 +1,9 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/dummy.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dummy
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/hash_top.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module hash_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/uart_rx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module uart_rx
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sources_1/new/uart_tx.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module uart_tx
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/hyunbumy/Dropbox/School/Classes/ee454/EE454/project/HW/HW.srcs/sim_1/new/top_tb.v" into library xil_defaultlib
