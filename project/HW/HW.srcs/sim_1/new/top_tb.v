@@ -15,9 +15,9 @@ module top_tb ();
   // Testbench uses a 100 MHz clock
   // Want to interface to 9600 baud UART
   // 10000000 / 9600 = 1042 Clocks Per Bit.
-  parameter c_CLOCK_PERIOD_NS = 10;
-  parameter c_CLKS_PER_BIT    = 868;
-//  parameter c_BIT_PERIOD      = 8600;
+  parameter c_CLOCK_PERIOD_NS = 100;
+  parameter c_CLKS_PER_BIT    = 87;     // 100000000 / 2000000
+  parameter c_BIT_PERIOD      = 8600;
    
   reg r_Clock = 0;
   reg r_Tx_DV = 0;
@@ -26,7 +26,35 @@ module top_tb ();
   reg r_Rx_Serial = 1;
   wire [7:0] w_Rx_Byte;
   wire w_Tx_Bit;   
-   
+  wire r_Rx_Bit;
+  
+  integer i;
+  
+    // Takes in input byte and serializes it 
+  task UART_WRITE_BYTE;
+    input [7:0] i_Data;
+    integer     ii;
+    begin
+       
+      // Send Start Bit
+      r_Rx_Serial <= 1'b0;
+      #(c_BIT_PERIOD);
+      #1000;
+       
+       
+      // Send Data Byte
+      for (ii=0; ii<8; ii=ii+1)
+        begin
+          r_Rx_Serial <= i_Data[ii];
+          #(c_BIT_PERIOD);
+        end
+       
+      // Send Stop Bit
+      r_Rx_Serial <= 1'b1;
+      #(c_BIT_PERIOD);
+     end
+  endtask // UART_WRITE_BYTE
+  
 //  uart_tx #(.CLKS_PER_BIT(c_CLKS_PER_BIT)) UART_TX_INST
 //    (.i_Clock(r_Clock),
 //     .i_Tx_DV(r_Tx_DV),
@@ -38,8 +66,7 @@ module top_tb ();
      
    hash_top inst (
     .CLK100MHZ(r_Clock),
-    .BTNC(r_Tx_DV),
-    .UART_TXD_IN(),
+    .UART_TXD_IN(r_Rx_Serial),
     .UART_RXD_OUT(w_Tx_Bit)
    );
  
@@ -54,15 +81,19 @@ module top_tb ();
        
       // Tell UART to send a command (exercise Tx)
       @(posedge r_Clock);
+      UART_WRITE_BYTE(8'd0);
       @(posedge r_Clock);
-      r_Tx_DV <= 1'b1;
-      r_Tx_Byte <= 8'd96;
+      
+      for (i = 0; i < 50; i=i+1)
+      begin
+        UART_WRITE_BYTE(8'd97);
+        UART_WRITE_BYTE(8'd98);
+        UART_WRITE_BYTE(8'd99);
+        UART_WRITE_BYTE(8'd100);
+      end
       @(posedge r_Clock);
-      @(posedge r_Clock);
-      @(posedge r_Clock);
-      @(posedge r_Clock);
-//      r_Tx_DV <= 1'b0;
-      @(posedge w_Tx_Done);
+      
+      
        
       // Send a command to the UART (exercise Rx)
 //      @(posedge r_Clock);
