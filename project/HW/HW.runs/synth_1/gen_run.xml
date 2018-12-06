@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1543828824">
-  <File Type="VDS-TIMING-PB" Name="hash_top_timing_summary_synth.pb"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="hash_top_timing_summary_synth.rpt"/>
+  <File Type="PA-TCL" Name="hash_top.tcl"/>
+  <File Type="REPORTS-TCL" Name="hash_top_reports.tcl"/>
+  <File Type="RDS-RDS" Name="hash_top.vds"/>
   <File Type="RDS-DCP" Name="hash_top.dcp"/>
   <File Type="RDS-UTIL-PB" Name="hash_top_utilization_synth.pb"/>
   <File Type="RDS-UTIL" Name="hash_top_utilization_synth.rpt"/>
-  <File Type="RDS-PROPCONSTRS" Name="hash_top_drc_synth.rpt"/>
-  <File Type="RDS-RDS" Name="hash_top.vds"/>
-  <File Type="REPORTS-TCL" Name="hash_top_reports.tcl"/>
-  <File Type="PA-TCL" Name="hash_top.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/dummy.v">

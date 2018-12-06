@@ -39,16 +39,14 @@ for i in range(100):
 
 print("Sum: {}s".format(total))
 
-print("")
+# t = bytearray("\xa3"*1000, encoding='utf-8')
+# start_time = time.time()
+# SHA3_256(t)
+# duration = time.time()-start_time
+# print("SHA3: {}s".format(duration))
 
-t = bytearray("\xa3"*1000, encoding='utf-8')
-start_time = time.time()
-SHA3_256(t)
-duration = time.time()-start_time
-print("SHA3: {}s".format(duration))
-
-s = Util.to_bitstring(bytearray("\xa3"*1000, encoding='utf-8'))
-start_time = time.time()
-ParallelHash256(s, 8)
-duration = time.time() - start_time
-print("Parallel: {}s".format(duration))
+# s = Util.to_bitstring(bytearray("\xa3"*1000, encoding='utf-8'))
+# start_time = time.time()
+# ParallelHash256(s, 8)
+# duration = time.time() - start_time
+# print("Parallel: {}s".format(duration))
